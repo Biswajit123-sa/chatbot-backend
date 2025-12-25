@@ -20,7 +20,6 @@ if (!KEY) {
     model = genAi.getGenerativeModel({ model: 'gemini-2.5-flash' })
   } catch (err) {
     console.error('failed to initialize generative model SDK:', err.message)
-    // still allow server to run, but use mock fallback
     useMock = true
   }
 }
@@ -55,4 +54,9 @@ app.post('/ask', async (req, res) => {
 const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
   console.log(`server has started on port ${PORT}`)
+})
+
+// simple health endpoint for quick checks
+app.get('/', (req, res) => {
+  return res.send({ _status: true, _message: 'ok' })
 })
